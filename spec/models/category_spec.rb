@@ -14,8 +14,8 @@ RSpec.describe Category do
     }
   end
   it "creates a post with a category" do
-    post.category = Category.create!(category)
-    Post.create!(post)
+    post.merge(category: Category.create(category))”
+    Post.create(post)
     expect(category.name).to eq(Post.category.name) 
   end
   
