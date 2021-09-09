@@ -10,9 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_08_153442) do
+ActiveRecord::Schema.define(version: 2021_09_09_152813) do
 
   create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer "source_id", null: false
+    t.integer "desitination_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["desitination_id"], name: "index_friendships_on_desitination_id"
+    t.index ["source_id"], name: "index_friendships_on_source_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "people", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -27,5 +48,7 @@ ActiveRecord::Schema.define(version: 2021_09_08_153442) do
     t.index ["category_id"], name: "index_posts_on_category_id"
   end
 
+  add_foreign_key "friendships", "people", column: "desitination_id"
+  add_foreign_key "friendships", "people", column: "source_id"
   add_foreign_key "posts", "categories"
 end
